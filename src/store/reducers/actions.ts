@@ -8,7 +8,10 @@ const getEntities = createAsyncThunk('entities/getEntities', async () => {
   try {
     const res = await entitiesApi.getEntities()
     const storedIds: number[] | null = storage.getItem('entities')
-    console.log(storedIds)
+    storage.setItem(
+      'server-sorting',
+      res.map((e) => e.id)
+    )
 
     if (storedIds) {
       return entitiesSortByIds(res, storedIds)
